@@ -1,0 +1,589 @@
+---
+title: "Processamento de dados de fitossociologia utilizando o R"
+subtitle: "Minicurso - II Encontro de Botânicos da Região Sul"
+author: "Pedro Higuchi - higuchip@gmail.com <br> Universidade do Estado de Santa Catarina <br> Lages, 30 de Agosto de 2023"
+format:
+  revealjs:
+    transition: fade
+    background-transition: fade
+    theme: dark
+    menu:
+      side: right
+      width: wide
+editor: visual
+output:
+  revealjs::revealjs_presentation:
+params:
+  data: default
+---
+
+## Objetivo Geral
+
+Apresentar e explorar o potencial da linguagem de programação estatística R, para o processamento de dados de fitossociologia de espécies arbóreas. apresentação do R, preparação de planilhas e importação de dados, introdução às noções básicas do R, e demonstração de aplicações práticas.
+
+## Objetivos Específicos
+
+-   Apresentação do R
+-   Noções básicas
+-   Preparação de planilhas e importação de dados
+-   Demontração de aplicações práticas na área de fitossociologia
+
+# Apresentação
+
+## Com o R você pode:
+
+-   Manipular dados;
+-   Criar apresentações gráficas fantásticas;
+-   Realizar análises estatísticas;
+-   Escrever relatórios;
+-   Preparar uma apresentação como esta!
+
+## Pontos fortes
+
+-   Manipulação e processamento de dados;
+-   Grande comunidade de programadores, usuários e acadêmicos;
+-   Gráficos excelentes!
+-   Uma infinidade de complementos;
+-   Livre!
+-   Roda nas mais diversas plataformas;
+-   Conversa com outras linguagens de programação.
+
+## Quem está usando o R no dia-a-dia
+
+-   Universidades e Institutos de Pesquisa;
+-   Empresas de internet (Google, Facebook);
+-   Empresas de seguro.
+
+## Um pouco de história
+
+-   **1976**: Desenvolvimento da linguagem estastística de programação **S**, nos Laboratórios Bell, no EUA, por Jhon Chambers, Rick Becker e Allan Wilks;
+
+    -   Objetivo da linguagem **S** era:
+
+        **Transformar ideias em softwares, de forma rápida e com fidelidade**
+
+## Um pouco de história
+
+-   **1990**: **R**oss Ihaka e **R**obert Gentleman começam adaptar a linguagem S, para ser utilizado em aulas de estatística na Universidade de Aukland;
+-   **1993**: O R é anunciado na lista de emails do S;
+-   **1995**: O código é disponibilizado ao público sob a licença GPL.
+
+## Um pouco de história
+
+-   A licença GPL é baseada em 4 liberdades:
+    1.  A liberdade de executar o programa, para qualquer propósito;
+    2.  A liberdade de estudar como o programa funciona e adaptá-lo para as suas necessidades;
+    3.  A liberdade de redistribuir cópias de modo que você possa ajudar ao seu próximo;
+    4.  A liberdade de aperfeiçoar o programa, e liberar os seus aperfeiçoamentos, de modo que toda a comunidade se beneficie deles.
+
+## Um pouco de história
+
+-   **1997**: Criação do R Development Core Team;
+-   **2000**: Primeira versão do R 1.0.0;
+-   **2022**: R 4.2.2 -- "Innocent and Trusting"
+
+# Noções Básicas
+
+## R & R-Studio
+
+![](images/Captura%20de%20tela%20de%202023-08-24%2017-29-10.png)
+
+## R & R-Studio
+
+-   Instalando e rodando localmente
+
+    -   [R: https://www.r-project.org/](https://www.r-project.org/ "Site do R")
+
+    -   [R-Studio: https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+
+-   Rodando versão cloud gratuíta
+
+    -   [Posit Cloud: https://posit.cloud/](https://posit.cloud/)
+
+## Conhecendo a interface do R-Studio
+
+-   Os quatro paineis
+
+-   Comandos sensíveis a caracteres maiúsculos e minúsculas;
+
+-   Decimais "."
+
+-   Fechamento de parênteses e colchetes de forma automática;
+
+-   Complemento automático de comandos;
+
+-   Acesso fácil aos arquivos de "ajuda";
+
+-   Facilidade de acesso a dados e variáveis.
+
+## Criando e organizando um projeto
+
+-   Não nomear diretórios com acento, espaço ou caracteres especiais;
+
+-   Sugestão para organização de estrutura de diretórios:
+
+    -   Dados
+
+    -   Scripts
+
+    -   Resultados
+
+    -   Manuscrito
+
+## Criando um script
+
+-   O que é um script?
+
+-   Como criar um script
+
+-   Vantagens
+
+    -   Replicabilidade
+
+    -   Auditoria
+
+    -   Otimização
+
+    -   Redução de erros
+
+## Criando um script
+
+-   Exemplo:
+
+    ``` r
+    # Minicurso R
+    # 30 de Agosto de 2023
+
+    # Este é um comentário explicativo sobre o código
+    # Está é uma operação de soma
+
+    10 + 20
+
+    # Agora, vamos criar uma variável 'x' e 'y' e atribuir os valores de 20 e 10 a elas
+
+    x <- 20
+    y <- 10
+
+    # Vamos somar 'x' e 'y' e imprimir o resultado
+
+    resultado <- x + y
+    resultado # Isso irá imprimir 30
+    ```
+
+-   Executando um script
+
+## Criando um script
+
+-   Nomeando objetos:
+
+    -   nomear objetos com nomes curtos, que façam referência à natureza da variável que está sendo trabalhada.
+
+    -   ser consistente.
+
+-   Vetor
+
+    ``` r
+    # Criando um vetor
+    s<-c(10, 4, 15, 10) #Número de espécies em parcelas
+    s
+    especies<-c("Araucaria angustifolia", "Lithraea brasiliensis", 
+                "Jacaranda puberula") 
+    especies
+    ```
+
+## Criando um script
+
+-   Matriz
+
+    ``` r
+    matriz<-matrix(c(1,2,9,8,22,14,4,5,2), nc=3)
+    matriz
+    ```
+
+-   Tabela (dataframe)
+
+    ``` r
+    spp <- c("Araucaria", "Prunus", "Ocotea") 
+    dap <- c(35, 20, 25) 
+    tabela <- data.frame(spp, dap)  
+    tabela
+    ```
+
+## **Fazendo contas simples**
+
+```{r, echo=TRUE}
+2+3+4+7
+5-5-8
+6*3*3
+
+```
+
+## Operadores lógicos
+
+|              |                                          |
+|--------------|------------------------------------------|
+| **Operador** | **Resultado**                            |
+| x == y       | Retorna TRUE se x for igual a y          |
+| x != y       | Retorna TRUE se x for diferente de y     |
+| x \> y       | Retorna TRUE se x for maior do que y     |
+| x \>= y      | Retorna TRUE se x for maior ou igual a y |
+| x \< y       | Retorna TRUE se x for menor do que y     |
+| x \<= y      | Retorna TRUE se x for menor ou igual a y |
+|              |                                          |
+
+## Instalando e carregando pacotes
+
+``` r
+install.packages("vegan")
+install.packages("dplyr")
+
+library(vegan)
+library(dplyr)
+```
+
+# Preparação de planilhas e importação de dados
+
+## Preparando planilha para importação
+
+-   A primeira linha: nome de variáveis ou espécies;
+
+-   A primeira coluna: usualmente para o nome das unidades amostrais;
+
+-   Nome das variáveis devem ser, preferencialmente, curtos, sem acento, espaço ou caracteres especiais;
+
+-   Caso necessário, usar "." ou "\_" para separar palavras;
+
+## Preparando planilha para importação
+
+-   Cada coluna deve conter apenas um tipo de informação (e.g., texto, números);
+
+-   Metadata (e.g., descrições da área de estudo, observações) deve estar em planilha a parte;
+
+-   Deletar eventuais comentários existentes na planilha;
+
+-   Celulas vazias serão lidas como "NA";
+
+-   Salvar arquivo no formato csv, com um nome curto, sem espaço, acento e caracteres especiais.
+
+## Importação de dados
+
+-   Modo 1: Utilizando o menu gráfico do R-studio
+
+-   Modo 2: Linha de comando
+
+    ``` r
+    dados <- read.table("dados/vegetation_data.csv",
+                        header = TRUE,
+                        sep = ";",
+                        dec = ",")
+    ```
+
+    ```{r}
+    dados <- read.table("dados/vegetation_data.csv",
+                        header = TRUE,
+                        sep = ";",
+                        dec = ",")
+    ```
+
+-   Vantagens e desvantagens de cada modo
+
+## Explorando os dados importados
+
+-   Comandos básicos
+
+    ``` r
+    # Visualização de todos os dados na forma de planilha
+    View(dados)
+
+    # Visualização das primeiras linhas
+    head(dados)
+
+    # Visualização das ultimas linhas
+    tail(dados)
+
+    # Dimensão do dataframe
+    dim(dados)
+
+    # Nomes das colunas
+    colnames(dados)
+
+    # Estatística descritiva das variáveis continuas
+    summary(dados)
+    ```
+
+## Explorando os dados importados
+
+-   Selecionando variáveis, colunas e linhas
+
+    -   Utilizando \$ e \[\]
+
+        ``` r
+        dados$dbh
+        dados[,4]
+        dados[1,]
+        ```
+
+## Filtrando uma espécie
+
+```{r, echo=TRUE}
+library(dplyr)
+colnames(dados)
+araucaria <- dados %>% filter(Species == "Araucaria angustifolia")
+head(araucaria)
+```
+
+## Plotando um histograma de frequência
+
+```{r, echo=TRUE}
+hist(araucaria$dbh)
+```
+
+# Aplicações Práticas
+
+## Corrigindo nomenclatura botânica de forma automatizada
+
+-   Baseado na **Flora do Brasil**
+
+-   Uso do pacote [flora](https://github.com/gustavobio/flora)
+
+-   Carregando as funções necessárias
+
+``` r
+# get_flora_corrected_names 
+source("https://gist.githubusercontent.com/higuchip/a5830ae2d0969e586e9bec8b5421107b/raw/a4da0888bd0444b8730369457fc1c70886fcf574/get_flora_corrected_names.R")
+
+# correct_species_names
+source("https://gist.githubusercontent.com/higuchip/5200c25897e0625b236d0bea1d715c84/raw/2a85ed10f1f318b14a28162be6f76dd4d27c03bb/correct_species_names.R")
+```
+
+```{r}
+# get_flora_corrected_names 
+source("https://gist.githubusercontent.com/higuchip/a5830ae2d0969e586e9bec8b5421107b/raw/a4da0888bd0444b8730369457fc1c70886fcf574/get_flora_corrected_names.R")
+
+# correct_species_names
+source("https://gist.githubusercontent.com/higuchip/5200c25897e0625b236d0bea1d715c84/raw/2a85ed10f1f318b14a28162be6f76dd4d27c03bb/correct_species_names.R")
+```
+
+## Corrigindo nomenclatura botânica de forma automatizada
+
+-   Exemplo de uso
+
+    ```{r}
+    library(flora)
+    ```
+
+    ```{r, echo=TRUE}
+    especies <- c("Dickonia sellowiana", "Allophylus edulis", "Calyptranthes concinna")
+    correcao <- get_flora_corrected_names(especies)
+    correcao
+    ```
+
+## Corrigindo nomenclatura botânica de forma automatizada
+
+-   Aplicação no banco de dados real
+
+```{r}
+library(flora)
+```
+
+```{r, echo = TRUE}
+
+nomes_originais<- unique(dados$Species)
+
+correcao <- get_flora_corrected_names(nomes_originais)
+
+head(correcao)
+```
+
+## Corrigindo nomenclatura botânica conforme Flora do Brasil
+
+-   Aplicação no banco de dados real
+
+```{r}
+library(flora)
+```
+
+```{r, echo=TRUE}
+dados_corrigidos <- correct_species_names(dados, correcao, species_column_name = "Species")
+head(dados_corrigidos)
+```
+
+## Análise da Riqueza e Diversidade
+
+-   Curva de acumulação de espécies
+
+    ``` r
+    # Criando uma matriz de abundância
+
+    matriz<- table(dados$PC, dados$Species)
+
+    # Criando a curva pelo método "exact"
+
+    curva_parcelas <- specaccum(matriz, method = "exact")
+    curva_parcelas
+
+    # Criando a curva pelo método "rarefaction"
+
+    curva_ind <- specaccum(matriz, method = "rarefaction")
+    curva_ind
+    ```
+
+## Análise da Riqueza e Diversidade
+
+```{r}
+library(vegan)
+# Criando uma matriz de abundância
+
+matriz<- table(dados$PC, dados$Species)
+
+# Criando a curva pelo método "exact"
+
+curva_parcelas <- specaccum(matriz, method = "exact")
+
+# Criando a curva pelo método "rarefaction"
+
+curva_ind <- specaccum(matriz, method = "rarefaction")
+
+```
+
+::: columns
+::: {.column width="50%"}
+-   Parcelas
+
+```{r,echo=TRUE, fig.width=4, fig.height=3}
+plot(curva_parcelas, 
+     ci.type="poly",  
+     col="blue", lwd=1, 
+     ci.lty=0, 
+     ci.col="lightblue",
+     xlab='Parcelas',
+     ylab='Riqueza')
+```
+
+```         
+```
+:::
+
+::: {.column width="50%"}
+-   Indivíduos
+
+```{r,echo=TRUE, fig.width=4, fig.height=3}
+plot(curva_ind,ci.type="poly",  
+     col="blue", lwd=1, 
+     ci.lty=0,xvar="individuals", 
+     ci.col="lightblue",
+     xlab='Indivíduos',
+     ylab='Riqueza')
+```
+:::
+:::
+
+## Análise da Riqueza e Diversidade
+
+-   Extrapoladores de riqueza
+
+    ```{r, echo=TRUE}
+    specpool(matriz)
+    ```
+
+-   Rarefação
+
+    ```{r, echo=TRUE}
+    rarefy(colSums(matriz), sample=1000)
+    ```
+
+## Análise da Riqueza e Diversidade
+
+-   Diversidade
+
+    ```{r, echo=TRUE}
+
+    # Shannon
+    H<-diversity(colSums(matriz))
+    H
+    # Pielou
+    S <- dim(matriz)[2] # Riqueza
+    S
+    J <- H/log(S)
+    J
+
+
+    ```
+
+## Padrão Espacial
+
+-   Indice de Morisita
+
+    ```{r, echo=TRUE}
+    # Selecionando as espécies mais abundantes (> 20 ind.)
+
+    especies_selecionadas <- matriz[,colSums(matriz)>20]
+
+    # Determinando o Índice de Morisita
+    dispindmorisita(especies_selecionadas)
+    ```
+
+## Fitossociologia
+
+```{r, echo=TRUE}
+
+# Carregar pacote necessário
+
+library(dplyr)
+
+# Definição da área amostrada em ha
+
+area_amostrada <- 1
+
+
+```
+
+## Fitossociologia
+
+```{r, echo=TRUE}
+# Usando a função mutate para determinar Área Seccional (as)
+
+dados_ab <- dados_corrigidos %>% 
+  mutate(as = (dbh^2*pi)/40000)
+
+head(dados_ab)
+```
+
+## Fitossociologia
+
+```{r, echo=TRUE}
+# Usando a funcao group_by e summarise para tabela fitossociologica
+
+fito <- dados_ab %>% 
+  group_by(corrected_name) %>% 
+  summarise(n = n(),
+            ab = sum(as),
+            ui = n_distinct(PC))
+head(fito)
+```
+
+## Fitossociologia
+
+```{r, echo=TRUE}
+# Usando mutate para os descritores fitossociologicos
+
+fito <- fito %>% mutate(ut = n_distinct(dados_ab$PC),
+                        DA = n/area_amostrada,
+                        DR = (DA/sum(DA))*100,
+                        DoA = ab/area_amostrada,
+                        DoR = (DoA/sum(DoA))*100,
+                        FA = (ui/ut)*100,
+                        FR = (FA/sum(FA))*100,
+                        IVI = (DR+DoR+FR)/3)
+head(fito)
+```
+
+## Fitossociologia
+
+```{r, echo=TRUE}
+# Ordenando em ordem descrescente de IVI
+fito <- fito %>% arrange(desc(IVI))
+fito
+```
+
+# Considerações Finais
